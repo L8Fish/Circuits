@@ -5,25 +5,25 @@ public abstract class Element implements Component {
     private Circuit circuit;
 	
     public Element() {
-	power = false;
-	circuit = null;
+	    power = false;
+	    circuit = null;
     }
 	
     public void setCircuit(Circuit circuit) {
-	this.circuit = circuit;
+	    this.circuit = circuit;
     }
 	
     public Circuit getCircuit() {
-	return circuit;
+	    return circuit;
     }
 	
     public boolean isTurnedOn() {
-	return power;
+	    return power;
     }
 	
     public void turnOn(boolean signal) {
-	power = signal;
-	performAction();
+	    power = signal;
+	    performAction();
     }	
 	
     abstract void performAction();

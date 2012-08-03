@@ -6,26 +6,26 @@ public abstract class Input extends Element {
     private ArrayList<Wire> output;
           
     public Input() {
-	super();
-	output = new ArrayList<Wire>();
+	    super();
+	    output = new ArrayList<Wire>();
     }
   
     public Input(ArrayList<Wire> output) {
-	super();
-	this.output = output;
-	for (int i=0; i<output.size(); i++) {
-	    output.get(i).setInput(this);
-	}
+	    super();
+	    this.output = output;
+	    for (int i=0; i<output.size(); i++) {
+	        output.get(i).setInput(this);
+	    }
     }
   
     public void setOutput(ArrayList<Wire> output) {
-	this.output = output;
-	for (int i=0; i<output.size(); i++) {
-	    output.get(i).setInput(this);
-	}
+	    this.output = output;
+	    for (int i=0; i<output.size(); i++) {
+	        output.get(i).setInput(this);
+	    }
     }
   
     public ArrayList<Wire> getOutput() {
-	return output;
+	    return output;
     }
 }

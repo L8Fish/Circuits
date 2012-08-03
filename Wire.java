@@ -8,40 +8,40 @@ public class Wire implements Component {
     private Element output;	
 	
     public Wire() {
-	status = false;
-	id = ++numberOfWires;
+	    status = false;
+	    id = ++numberOfWires;
     }
 	
     public int getId() {		
-	return id;
+	    return id;
     }
 	
     public boolean isConnected() {
-	if (input!=null && output!=null) {return true;}
-	else {return false;}
+	    if (input!=null && output!=null) {return true;}
+	    else {return false;}
     }
 	
     public void setStatus(boolean status) {
-	this.status = status;
+	    this.status = status;
     }
 	
     public boolean getStatus() {
-	return status;
+	    return status;
     }
 	
     public void setInput(Element input) {
-	this.input = input;
+	    this.input = input;
     }
 	
     public Element getInput() {
-	return input;
+	    return input;
     }
 	
     public void setOutput(Element output) {
-	this.output = output;
+	    this.output = output;
     }
 	
     public Element getOutput() {
-	return output;
+	    return output;
     }
 }
