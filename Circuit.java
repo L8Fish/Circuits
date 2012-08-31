@@ -16,34 +16,73 @@ public class Circuit {
     }
 	
     public void powerUp() {
-	    for (int i=0; i<elements.size(); i++) {
-	        stack.clear();
-	        stackCounter = 0;
-	        elements.get(i).turnOn(true);
-	        useStack();
-	    }
+        for (Element element : elements) {
+            stack.clear();
+            stackCounter = 0;
+            element.turnOn(true);
+            useStack();
+        }
     }
 	
     public boolean isWiredUp() {
 	    boolean wiredUp = true;
-	    for (int i=0; i<elements.size(); i++) {
-	        if(!elements.get(i).isConnected()) {wiredUp = false;}
+        for (Element element : elements) {
+            if (!element.isConnected()) {
+                wiredUp = false;
+            }
         }
-        for (int i=0; i<wires.size(); i++) {
-            if(!wires.get(i).isConnected()) {wiredUp = false;}
+        for (Wire wire : wires) {
+            if (!wire.isConnected()) {
+                wiredUp = false;
+            }
         }
         return wiredUp;
     }
-	
+
+    /**
+     * At the moment just to test.
+     */
     public void displayCircuit() {
+        /*
 	    for (int i=0; i<elements.size(); i++) {
 	        System.out.println("El "+i+": isConnected="+elements.get(i).isConnected()+" isTurnedOn="+elements.get(i).isTurnedOn());
 	        if (elements.get(i) instanceof InputAction) {System.out.println("Input: "+((InputAction)elements.get(i)).getInputAction());}
 	    	if (elements.get(i) instanceof OutputAction) {System.out.println("Output: "+((OutputAction)elements.get(i)).getOutputAction());}
 	    }
-        for (int i=0; i<wires.size(); i++) {
-            System.out.println("Wire "+wires.get(i).getId()+": isConnected="+wires.get(i).isConnected()+" status="+wires.get(i).getStatus());
+        for (Wire wire : wires) {
+            System.out.println("Wire " + wire.getId() + ": isConnected=" + wire.isConnected() + " status=" + wire.getStatus());
         }
+        */
+        System.out.println("Result in bits (ripple-adder):");
+        int max = 0;
+        int count = 0;
+        int tempNr = 0;
+        int number = 0;
+        for (int i=elements.size()-1; i>=0; i--) {
+            if (elements.get(i) instanceof OutputAction) {
+                max++;
+                count = max;
+            }
+        }
+        for (int i=elements.size()-1; i>=0; i--) {
+            if (elements.get(i) instanceof OutputAction) {
+                if (count==max) {tempNr = ((OutputAction)elements.get(i)).getOutputAction();}
+                else if (count+1==max) {
+                    System.out.print(((OutputAction)elements.get(i)).getOutputAction());
+                    System.out.print(tempNr);
+                    number+=Math.pow(2.0,count*1.0)*((OutputAction)elements.get(i)).getOutputAction();
+                    number+=Math.pow(2.0,count-1.0)*tempNr;
+                }
+                else {
+                    System.out.print(((OutputAction)elements.get(i)).getOutputAction());
+                    number+=Math.pow(2.0,count-1.0)*((OutputAction)elements.get(i)).getOutputAction();
+                }
+                count--;
+            }
+        }
+        System.out.println("");
+        System.out.println("= "+number+" in decimal");
+        System.out.println(""+Wire.numberOfWires+" wires used in Circuit!");
     }
 	
     public void makeAction(int index, int actionInput) {

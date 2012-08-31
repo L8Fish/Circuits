@@ -27,4 +27,5 @@ public abstract class Element implements Component {
     }	
 	
     abstract void performAction();
+    abstract Element newInstance();
 }

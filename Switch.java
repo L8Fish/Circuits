@@ -1,23 +1,20 @@
 package net.l8fish.circuits;
 
-import java.util.ArrayList;
-
 public class Switch extends Logic implements InputAction {
     private int inputAction;
   
     public Switch() {
-	    super();
-	    inputAction = 0;
+	    super(1, 1);
+        inputAction = 0;
     }
                 
-    public Switch(ArrayList<Wire> input, ArrayList<Wire> output) {
+    public Switch(Wire[] input, Wire[] output) {
 	    super(input, output);
 	    inputAction = 0;
     }
         
     public boolean isConnected() {
-	    if (getInput().size()==1 && getOutput().size()==1) {return true;}
-	    else {return false;}
+        return getInput().length == 1 && getOutput().length == 1;
     }
         
     public void setInputAction(int action) {
@@ -31,18 +28,22 @@ public class Switch extends Logic implements InputAction {
         
     public void performAction() {
 	    if (isConnected()) {
-	        boolean first = getOutput().get(0).getStatus();
+	        boolean first = getOutput()[0].getStatus();
 	        if (this.isTurnedOn() && inputAction==1) {
-		        if (getInput().get(0).getStatus()) {getOutput().get(0).setStatus(true);}
-		        else {getOutput().get(0).setStatus(false);}
+		        if (getInput()[0].getStatus()) {getOutput()[0].setStatus(true);}
+		        else {getOutput()[0].setStatus(false);}
 	        }
 	        else {
-		        getOutput().get(0).setStatus(false);
+		        getOutput()[0].setStatus(false);
 	        }
-	        boolean second = getOutput().get(0).getStatus();
+	        boolean second = getOutput()[0].getStatus();
 	        if (first!=second && getCircuit()!=null) {
-		        getCircuit().stack.add(getOutput().get(0).getOutput());
+		        getCircuit().stack.add(getOutput()[0].getOutput());
 	        }
 	    }
-    } 
+    }
+
+    public Element newInstance() {
+        return new Switch();
+    }
 }

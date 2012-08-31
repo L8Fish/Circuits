@@ -1,48 +1,65 @@
 package net.l8fish.circuits;
 
-import java.util.ArrayList;
-
 public abstract class Logic extends Element {
-    private ArrayList<Wire> input;
-    private ArrayList<Wire> output; 
-        
-    public Logic() {
+    private Wire[] input;
+    private Wire[] output;
+
+    public Logic(int in, int out) {
+        input = new Wire[in];
+        output = new Wire[out];
+    }
+
+    public Logic(Wire[] input, Wire[] output) {
 	    super();
-	    input = new ArrayList<Wire>();
-	    output = new ArrayList<Wire>();
+        this.input = input;
+        this.output = output;
+        for (Wire anInput : input) {
+            anInput.setOutput(this);
+        }
+        for (Wire anOutput : output) {
+            anOutput.setInput(this);
+        }
     }
   
-    public Logic(ArrayList<Wire> input, ArrayList<Wire> output) {
-	    super();
+    public void setInput(Wire[] input) {
 	    this.input = input;
+        for (Wire anInput : input) {
+            anInput.setOutput(this);
+        }
+    }
+
+    public void setInput(int index, Wire wire) {
+        input[index] = wire;
+        if (wire!=null)
+        wire.setOutput(this);
+    }
+  
+    public void setOutput(Wire[] output) {
 	    this.output = output;
-	    for (int i=0; i<input.size(); i++) {
-	        input.get(i).setOutput(this);
-	    }
-	    for (int i=0; i<output.size(); i++) {
-	        output.get(i).setInput(this);
-	    }
+        for (Wire anOutput : output) {
+            anOutput.setInput(this);
+        }
+    }
+
+    public void setOutput(int index, Wire wire) {
+        output[index] = wire;
+        if(wire!=null)
+        wire.setInput(this);
     }
   
-    public void setInput(ArrayList<Wire> input) {
-	    this.input = input;
-	    for (int i=0; i<input.size(); i++) {
-	        input.get(i).setOutput(this);
-	    }
-    }
-  
-    public void setOutput(ArrayList<Wire> output) {
-	    this.output = output;
-	    for (int i=0; i<output.size(); i++) {
-	        output.get(i).setInput(this);
-    	}
-    }
-  
-    public ArrayList<Wire> getInput() {
+    public Wire[] getInput() {
 	    return input;
     }
+
+    public Wire getInput(int index) {
+        return input[index];
+    }
   
-    public ArrayList<Wire> getOutput() {
+    public Wire[] getOutput() {
 	    return output;
+    }
+
+    public Wire getOutput(int index) {
+        return output[index];
     }
 }

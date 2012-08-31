@@ -1,31 +1,38 @@
 package net.l8fish.circuits;
 
-import java.util.ArrayList;
-
 public abstract class Input extends Element {
-    private ArrayList<Wire> output;
-          
-    public Input() {
-	    super();
-	    output = new ArrayList<Wire>();
+
+    private Wire[] output;
+
+    public Input(int out) {
+        output = new Wire[out];
     }
-  
-    public Input(ArrayList<Wire> output) {
+
+    public Input(Wire[] output) {
 	    super();
 	    this.output = output;
-	    for (int i=0; i<output.size(); i++) {
-	        output.get(i).setInput(this);
-	    }
+        for (Wire anOutput : output) {
+            anOutput.setInput(this);
+        }
     }
-  
-    public void setOutput(ArrayList<Wire> output) {
+
+    public void setOutput(Wire[] output) {
 	    this.output = output;
-	    for (int i=0; i<output.size(); i++) {
-	        output.get(i).setInput(this);
-	    }
+        for (Wire anOutput : output) {
+            anOutput.setInput(this);
+        }
     }
-  
-    public ArrayList<Wire> getOutput() {
+
+    public void setOutput(int index, Wire wire) {
+        output[index] = wire;
+        wire.setInput(this);
+    }
+
+    public Wire[] getOutput() {
 	    return output;
+    }
+
+    public Wire getOutput(int index) {
+        return output[index];
     }
 }

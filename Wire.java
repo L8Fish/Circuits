@@ -17,8 +17,7 @@ public class Wire implements Component {
     }
 	
     public boolean isConnected() {
-	    if (input!=null && output!=null) {return true;}
-	    else {return false;}
+        return input != null && output != null;
     }
 	
     public void setStatus(boolean status) {
